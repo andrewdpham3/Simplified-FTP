@@ -4,6 +4,8 @@ import socket
 import sys
 import argparse
 
+from libftp import *
+
 # Create our argument parser object
 parser = argparse.ArgumentParser(description='A simple FTP server.')
 
@@ -36,7 +38,7 @@ try:
 				conn_done = False
 
 				while not conn_done:
-					data = conn.recv(1)
+					data = conn.recv(2)
 
 					if not data:
 						# FIXME: Client closed connection
@@ -46,16 +48,22 @@ try:
 					# Decode the control message as a UTF-8 string
 					message = str(data.decode("utf-8"))
 
-					if message == "g":
+					if message[0] == "g":
 						print("GET")
+						settings = control_get(conn)
+						print(settings)
 
-					elif message == "p":
+					elif message[0] == "p":
 						print("PUT")
+						settings = control_get(conn)
+						print(settings)
 
-					elif message == "l":
+					elif message[0] == "l":
 						print("LS")
+						settings = control_get(conn)
+						print(settings)
 
-					elif message == "q":
+					elif message[0] == "q":
 						print("Client disconnecting...")
 						conn.close()
 						conn_done = True
@@ -64,6 +72,8 @@ try:
 						print("Unknown Command:", message)
 						# TODO: send uc
 except KeyboardInterrupt:
+	s.close()
+	print()
 	print("Exiting...")
 	sys.exit(0)
 except IOError as e:
