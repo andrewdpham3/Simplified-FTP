@@ -63,6 +63,12 @@ try:
 					else:
 						print("Unknown Command:", message)
 						# TODO: send uc
+except KeyboardInterrupt:
+	print("Exiting...")
+	sys.exit(0)
+except IOError as e:
+	print("IOError: ", e)
+	sys.exit(1)
 except:
-	# TODO: Catch specific errors
-	print("Error opening server socket! Make sure that another process is not using this port!")
+	print("Something went wrong, but we don't know what!")
+	sys.exit(1)
