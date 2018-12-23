@@ -1,5 +1,6 @@
-language: python
-python:
-  - "3.6"
-script: 
-python serv.py 1234
+  language: python
+  python:
+    - "3.6"
+  script: 
+    python serv.py 1234
+    |cli machinename 1234
