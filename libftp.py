@@ -34,13 +34,20 @@ def sender_open(addr, port):
 		sys.exit(1)
 
 # Open and return a data channel connection and address object
-def listener_open(port):
+def listener_open(port=None):
 	try:
 		with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-			s.bind(('', port))
+			if not port:
+				s.bind(('', 0))
+			else:
+				s.bind(('', port))
 			s.listen()
 			conn, addr = s.accept()
-			return (conn, addr)
+
+			# TODO: do we need to close this?
+			s.close()
+
+			return (conn, addr, s.getsockname()[1])
 	except IOError as e:
 		print("IOError while opening listener channel: ", e)
 		sys.exit(1)
