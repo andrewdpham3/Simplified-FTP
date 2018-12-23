@@ -2,5 +2,5 @@
   python:
     - "3.6"
   script: 
-    python serv.py 1234
+    python serv.py 1234 |
     cli machinename 1234
