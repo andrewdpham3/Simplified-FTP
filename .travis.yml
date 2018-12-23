@@ -3,4 +3,4 @@
     - "3.6"
   script: 
     python serv.py 1234
-   &python cli.py 127.0.0.1 1234
+   |python cli.py 127.0.0.1 1234
