@@ -4,10 +4,6 @@
 
 Assignment 1 created for CPSC 471, Computer Communications, at CSUF.
 
-Andrew Pham
+Authors: Andrew Pham, Colemen Nugent, Mundo Guzman, Elias Jackson
 
-Colemen Nugent
-
-Mundo Guzman
-
-Elias Jackson
+Language: Python 3
