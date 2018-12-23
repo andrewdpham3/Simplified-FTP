@@ -28,6 +28,8 @@ def put(settings, addr):
 	listener_open(addr, settings[1])
 	receive_file(settings[0])
 
+#TODO: ls()
+
 try:
 	with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 		s.bind(('', int(args.port)))
@@ -77,7 +79,6 @@ try:
 
 					else:
 						print("Unknown Command:", message)
-						# TODO: send uc
 except KeyboardInterrupt:
 	s.close()
 	print()

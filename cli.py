@@ -30,12 +30,13 @@ def get(filename):
 	print("Getting file:", filename)
 	port = random.randint(6000,7000)
 	message = bytes(("g;" + filename + ";" + str(port) + "\r\n"), "utf-8")
-	print(control)
 	control.sendall(message)
 	s = listener_open(port)
 	receive_file(filename, s)
 
-#TODO: put, ls
+#TODO: put
+
+#TODO: ls
 
 try:
 	while not done:
@@ -51,11 +52,11 @@ try:
 			ls(command[1])
 
 		elif command[0] == "quit":
-			# TODO: send close
 			control.close()
 			done = True
 
 		else:
+			print()
 			print("Unknown command entered!")
 			print("Please use one of the following commands:")
 			print("get <filename>")

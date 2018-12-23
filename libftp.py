@@ -14,8 +14,7 @@ def control_get(conn):
 		tmpdata = conn.recv(16)
 
 		if not tmpdata:
-			# FIXME: Client closed connection
-			print("Panic")
+			print("Client closed connection while we were receiving data!")
 			break
 		else:
 			partial += str(tmpdata.decode("utf-8"))
@@ -45,7 +44,6 @@ def listener_open(port):
 		data.listen()
 		conn, addr = data.accept()
 
-		# TODO: do we need to close this?
 		data.close()
 
 		return conn
