@@ -20,8 +20,6 @@ if len(sys.argv) < 3:
 # Actually parse the arguments
 args = parser.parse_args()
 
-done = False
-
 control.connect((args.address, int(args.port)))
 
 
@@ -52,6 +50,7 @@ def ls(directory):
 	s = listener_open(port)
 	ls_files(directory,s)
 
+done = False
 
 try:
 	while not done:
@@ -73,7 +72,7 @@ try:
 
 		else:
 			print()
-			print('The command "{0}" is not recognized ',command[0])
+			print('The command "{}" is not recognized '.format(command[0]))
 			print("Please use one of the following commands:")
 			print("get <filename>")
 			print("put <filename>")
