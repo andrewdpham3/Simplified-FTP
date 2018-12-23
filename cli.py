@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+
+import socket
 import random
 import sys
 import argparse
@@ -20,59 +22,42 @@ if len(sys.argv) < 3:
 # Actually parse the arguments
 args = parser.parse_args()
 
+done = False
+
 control.connect((args.address, int(args.port)))
 
-
-################# Command Definitions ######################
-
 def get(filename):
-	""" Downloads file from the server """
-	print('Downloading file:', filename)
+	print("Getting file:", filename)
 	port = random.randint(6000,7000)
 	message = bytes(("g;" + filename + ";" + str(port) + "\r\n"), "utf-8")
 	control.sendall(message)
 	s = listener_open(port)
-	receive_file(filename,s)
+	receive_file(filename, s)
 
+#TODO: put
 
-def put(filename):
-	""" Uploads file to the server """
-	print('Uploading file:', filename)
-	port = random.randint(6000,7000)
-	s = sender_open(port)
-	send_file(filename,s)
-
-
-def ls(directory):
-	""" List files on the server """ 
-	print('Listing files on server...')
-	port = random.randint(6000,7000)
-	s = listener_open(port)
-	ls_files(directory,s)
-
-done = False
+#TODO: ls
 
 try:
 	while not done:
 		command = input("ftp> ").split()
-		cmd = command[0].upper()
 
-		if cmd == 'GET':
+		if command[0] == "get":
 			get(command[1])
 
-		elif cmd == 'PUT':
+		elif command[0] == "put":
 			put(command[1])
 
-		elif cmd == 'LS':
+		elif command[0] == "ls":
 			ls(command[1])
 
-		elif cmd == 'QUIT':
+		elif command[0] == "quit":
 			control.close()
 			done = True
 
 		else:
 			print()
-			print('The command "{}" is not recognized '.format(command[0]))
+			print("Unknown command entered!")
 			print("Please use one of the following commands:")
 			print("get <filename>")
 			print("put <filename>")
