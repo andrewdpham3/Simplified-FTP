@@ -1,4 +1,4 @@
   language: python
   python:
     - "3.6"
-  script: python serv.py <1234>
+  script: python serv.py 1234
