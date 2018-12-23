@@ -1,20 +1,25 @@
 import socket
 import sys
 
+control = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+data = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+
 # Read data from the control channel and return a tuple of arguments
 def control_get(conn):
 	partial = ""
 
-	# Get the filename
 	while True:
-		data = conn.recv(16)
+		print("recving data...")
+		tmpdata = conn.recv(16)
 
-		if not data:
+		if not tmpdata:
 			# FIXME: Client closed connection
 			print("Panic")
 			break
 		else:
-			partial += str(data.decode("utf-8"))
+			partial += str(tmpdata.decode("utf-8"))
+		print(partial)
 
 		end = partial.find("\r\n")
 		if end > 0:
@@ -26,28 +31,25 @@ def control_get(conn):
 # Open and return a data channel connection
 def sender_open(addr, port):
 	try:
-		print("addr:", addr)
-		with socket.create_connection((str(addr), port)) as s:
-			return s
+		print("Opening sender channel to", addr, port, "...")
+		data.connect((addr, int(port)))
 	except IOError as e:
 		print("IOError while opening sender channel: ", e)
 		sys.exit(1)
 
 # Open and return a data channel connection and address object
-def listener_open(port=None):
+def listener_open(port):
 	try:
-		with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-			if not port:
-				s.bind(('', 0))
-			else:
-				s.bind(('', port))
-			s.listen()
-			conn, addr = s.accept()
+		data.bind(('', port))
+		print("Listening on port", port, "...")
+		data.listen()
+		conn, addr = data.accept()
 
-			# TODO: do we need to close this?
-			s.close()
+		# TODO: do we need to close this?
+		data.close()
 
-			return (conn, addr, s.getsockname()[1])
+		return conn
+
 	except IOError as e:
 		print("IOError while opening listener channel: ", e)
 		sys.exit(1)

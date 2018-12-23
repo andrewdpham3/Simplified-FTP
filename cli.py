@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import socket
+import random
 import sys
 import argparse
 
@@ -23,11 +24,16 @@ args = parser.parse_args()
 
 done = False
 
-s = sender_open(args.address, args.port)
+control.connect((args.address, int(args.port)))
 
 def get(filename):
 	print("Getting file:", filename)
-	# TODO: actually download the file
+	port = random.randint(6000,7000)
+	message = bytes(("g;" + filename + ";" + str(port) + "\r\n"), "utf-8")
+	print(control)
+	control.sendall(message)
+	s = listener_open(port)
+	receive_file(filename, s)
 
 #TODO: put, ls
 
@@ -46,7 +52,7 @@ try:
 
 		elif command[0] == "quit":
 			# TODO: send close
-			s.close()
+			control.close()
 			done = True
 
 		else:

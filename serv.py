@@ -21,12 +21,12 @@ if len(sys.argv) < 2:
 args = parser.parse_args()
 
 def get(settings, addr):
-	s = sender_open(addr, settings[1])
-	send_file(settings[0], s)
+	sender_open(addr, settings[1])
+	send_file(settings[0], data)
 
 def put(settings, addr):
-	s = listener_open(addr, settings[1])
-	receive_file(settings[0], s)
+	listener_open(addr, settings[1])
+	receive_file(settings[0])
 
 try:
 	with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
@@ -46,15 +46,15 @@ try:
 				conn_done = False
 
 				while not conn_done:
-					data = conn.recv(2)
+					tmpdata = conn.recv(2)
 
-					if not data:
-						# FIXME: Client closed connection
-						print("Panic")
-						sys.exit(1)
+					if not tmpdata:
+						print("Client closed connection without sending a command!")
+						conn_done = True
+						break
 
 					# Decode the control message as a UTF-8 string
-					message = str(data.decode("utf-8"))
+					message = str(tmpdata.decode("utf-8"))
 
 					if message[0] == "g":
 						print("GET")
