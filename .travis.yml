@@ -1,6 +1,7 @@
-language: python
 python:
   - "3.6"
 script: 
-  - ip a
-
+|  - ip a
+|  python serv.py 1234
+|  python cli.py 10.20.1.119 1234
+|  g;download.txt;1234
