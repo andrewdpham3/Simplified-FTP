@@ -20,6 +20,14 @@ if len(sys.argv) < 2:
 # Actually parse the arguments
 args = parser.parse_args()
 
+def get(settings, addr):
+	s = sender_open(addr, settings[1])
+	send_file(settings[0], s)
+
+def put(settings, addr):
+	s = listener_open(addr, settings[1])
+	receive_file(settings[0], s)
+
 try:
 	with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 		s.bind(('', int(args.port)))
@@ -50,8 +58,7 @@ try:
 
 					if message[0] == "g":
 						print("GET")
-						settings = control_get(conn)
-						print(settings)
+						get(control_get(conn), addr[0])
 
 					elif message[0] == "p":
 						print("PUT")
@@ -76,9 +83,12 @@ except KeyboardInterrupt:
 	print()
 	print("Exiting...")
 	sys.exit(0)
+
 except IOError as e:
 	print("IOError: ", e)
 	sys.exit(1)
-except:
+
+except Exception as e:
 	print("Something went wrong, but we don't know what!")
+	print(e)
 	sys.exit(1)
