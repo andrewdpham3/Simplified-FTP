@@ -2,10 +2,5 @@ language: python
 python:
   - "3.6"
 script: 
-|  - ip a
-|  python serv.py 1234
-|  python cli.py localhost 1234
-|  g;download.txt;1234
-|  p;upload.txt;1234
-|  l;directory;1234
-|  q
+  - ip a
+
