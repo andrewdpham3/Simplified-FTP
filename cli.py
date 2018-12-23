@@ -55,18 +55,18 @@ done = False
 try:
 	while not done:
 		command = input("ftp> ").split()
-		command = command.upper()
+		cmd = command[0].upper()
 
-		if command[0] == 'GET':
+		if cmd == 'GET':
 			get(command[1])
 
-		elif command[0] == 'PUT':
+		elif cmd == 'PUT':
 			put(command[1])
 
-		elif command[0] == 'LS':
+		elif cmd == 'LS':
 			ls(command[1])
 
-		elif command[0] == 'QUIT':
+		elif cmd == 'QUIT':
 			control.close()
 			done = True
 
