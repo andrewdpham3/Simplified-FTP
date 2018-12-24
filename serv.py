@@ -28,8 +28,6 @@ def put(settings, addr):
 	listener_open(addr, settings[1])
 	receive_file(settings[0])
 
-#TODO: ls()
-
 try:
 	with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 		s.bind(('', int(args.port)))
@@ -69,8 +67,13 @@ try:
 
 					elif message[0] == "l":
 						print("LS")
-						settings = control_get(conn)
-						print(settings)
+						mySocket=socket.socket()
+						mySocket.bind(("127.0.0.1",5000))
+						mySocket.listen(1)
+						connn, addr = mySocket.accept()
+						data=os.listdir()
+						str1 = '\n'.join(data)
+						connn.send(str1.encode())
 
 					elif message[0] == "q":
 						print("Client disconnecting...")

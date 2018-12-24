@@ -39,19 +39,24 @@ def put(filename):
 	""" Uploads file to the server """
 	print('Uploading file:', filename)
 	#port = random.randint(6000,7000)
-	port = "1234"
+	#port = "1234"
 	message = bytes(("p;" + filename + ";" + str(port) + "\r\n"), "utf-8")
 	control.sendall(message)
 	s = sender_open("127.0.0.1",port)#todo: un-hardcode the localhost
 	send_file(filename,s)
 
 
-def ls(directory):
+def ls():
 	""" List files on the server """ 
 	print('Listing files on server...')
-	port = random.randint(6000,7000)
-	s = listener_open(port)
-	ls_files(directory,s)
+	port = 5000
+	message = bytes(("l;"), "utf-8")
+	control.sendall(message)
+	mySocket = socket.socket()
+	mySocket.connect(('127.0.0.1',port))
+	data = mySocket.recv(1024).decode()
+	print(data)
+
 
 done = False
 
@@ -67,7 +72,7 @@ try:
 			put(command[1])
 
 		elif cmd == 'LS':
-			ls(command[1])
+			ls()
 
 		elif cmd == 'QUIT':
 			control.close()

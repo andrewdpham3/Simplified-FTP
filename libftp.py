@@ -1,5 +1,6 @@
 import socket
 import sys
+import os
 
 control = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 data = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -44,9 +45,9 @@ def listener_open(port):
 		data.listen()
 		conn, addr = data.accept()
 
-		data.close()
+		#data.close()
 
-		return conn
+		#return conn
 
 	except IOError as e:
 		print("IOError while opening listener channel: ", e)
@@ -86,3 +87,11 @@ def receive_file(filename,sock):
 		totalRecv += len(data)
 		f.write(data)
 	f.close()
+
+def send_ls(sock):
+	print("send ls called")
+	sock.send(os.listdir())
+
+def ls_files(sock):
+	print("ls files called")
+	print(sock.receive(1024))
