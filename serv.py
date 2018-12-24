@@ -3,6 +3,7 @@
 import socket
 import sys
 import argparse
+import os
 
 from libftp import *
 

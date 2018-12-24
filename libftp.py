@@ -64,18 +64,6 @@ def send_file(filename, sock):
 		f.close()
 		sock.close()
 
-'''# Receive a file over a socket
-def receive_file(filename, sock):
-	with open(filename, 'wb') as f:
-		print("Receiving file", filename, "...")
-		
-		block = sock.recv(1024)
-		while (block):
-			f.write(block)
-			block = sock.recv(1024)
-		f.close()
-		sock.close()
-'''
 def receive_file(filename,sock):
 	f = open('new_'+filename, 'w+')
 	data = sock.recv(1024)

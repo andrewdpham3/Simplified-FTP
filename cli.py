@@ -38,11 +38,11 @@ def get(filename):
 def put(filename):
 	""" Uploads file to the server """
 	print('Uploading file:', filename)
-	port = random.randint(6000,7000)
-	#port = "1234"
+	#port = random.randint(6000,7000)
+	port = "1234"
 	message = bytes(("p;" + filename + ";" + str(port) + "\r\n"), "utf-8")
 	control.sendall(message)
-	s = sender_open(args.address,port)
+	s = sender_open("127.0.0.1",port)#todo: un-hardcode the localhost
 	send_file(filename,s)
 
 
@@ -56,7 +56,6 @@ def ls():
 	mySocket.connect((args.address,port))
 	data = mySocket.recv(1024).decode()
 	print(data)
-
 
 done = False
 
