@@ -38,7 +38,7 @@ def get(filename):
 def put(filename):
 	""" Uploads file to the server """
 	print('Uploading file:', filename)
-	#port = random.randint(6000,7000)
+	port = random.randint(6000,7000)
 	#port = "1234"
 	message = bytes(("p;" + filename + ";" + str(port) + "\r\n"), "utf-8")
 	control.sendall(message)

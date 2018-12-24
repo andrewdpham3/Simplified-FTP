@@ -87,11 +87,3 @@ def receive_file(filename,sock):
 		totalRecv += len(data)
 		f.write(data)
 	f.close()
-
-def send_ls(sock):
-	print("send ls called")
-	sock.send(os.listdir())
-
-def ls_files(sock):
-	print("ls files called")
-	print(sock.receive(1024))
