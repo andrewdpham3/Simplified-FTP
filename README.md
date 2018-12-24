@@ -12,9 +12,9 @@ Execution Instructions:
 
 2. Run client (python cli.py 127.0.0.1 1234)
 
-3. Download (ftp>get download.txt)
+3. Download (ftp>get test.txt)
 
-4. Upload (ftp>put download.txt)
+4. Upload (ftp>put test.txt)
 
 5. List (ftp>ls)
 
