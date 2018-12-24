@@ -34,7 +34,7 @@ def get(filename):
 	s = listener_open(port)
 	receive_file(filename,s)
 
-
+'''
 def put(filename):
 	""" Uploads file to the server """
 	print('Uploading file:', filename)
@@ -43,7 +43,22 @@ def put(filename):
 	message = bytes(("p;" + filename + ";" + str(port) + "\r\n"), "utf-8")
 	control.sendall(message)
 	s = sender_open("127.0.0.1",port)#todo: un-hardcode the localhost
-	send_file(filename,s)
+	send_file2(filename,s)
+'''
+def put(filename):
+	""" Uploads file to the server """
+	print('Uploading file:', filename)
+	port = 5000
+	message = bytes(("p;" + filename), "utf-8")
+	control.sendall(message)
+	s = socket.socket()
+	s.connect((args.address, port))
+	with open(filename, 'rb') as f:
+		bytesToSend = f.read(1024)
+		sock.send(bytesToSend)
+		while bytesToSend != "":
+			bytesToSend = f.read(1024)
+			sock.send(bytesToSend)
 
 
 def ls():

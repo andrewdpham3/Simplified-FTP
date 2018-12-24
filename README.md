@@ -19,3 +19,6 @@ Execution Instructions:
 5. List (ftp>ls)
 
 6. Quit (ftp>quit)
+
+Bug: Cannot enter sequential commands, must restart server and client.
+

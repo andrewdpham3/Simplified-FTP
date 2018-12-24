@@ -63,8 +63,16 @@ try:
 
 					elif message[0] == "p":
 						print("PUT")
-						settings = control_get(conn)
-						print(settings)
+						filename = conn.recv(10).decode("utf-8")
+						f = open(filename)
+						data = sock.recv(1024)
+						totalRecv = len(data)
+						f.write(data.decode())
+						while (sock.recv(1024)):
+							data = s.recv(1024)
+							totalRecv += len(data)
+						f.write(data)
+						f.close()
 
 					elif message[0] == "l":
 						print("LS")
