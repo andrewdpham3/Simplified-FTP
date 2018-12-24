@@ -1,6 +1,5 @@
 import socket
 import sys
-import os
 
 control = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 data = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -45,9 +44,9 @@ def listener_open(port):
 		data.listen()
 		conn, addr = data.accept()
 
-		#data.close()
+		data.close()
 
-		#return conn
+		return conn
 
 	except IOError as e:
 		print("IOError while opening listener channel: ", e)

@@ -42,7 +42,7 @@ def put(filename):
 	#port = "1234"
 	message = bytes(("p;" + filename + ";" + str(port) + "\r\n"), "utf-8")
 	control.sendall(message)
-	s = sender_open("127.0.0.1",port)#todo: un-hardcode the localhost
+	s = sender_open(args.address,port)
 	send_file(filename,s)
 
 
@@ -53,7 +53,7 @@ def ls():
 	message = bytes(("l;"), "utf-8")
 	control.sendall(message)
 	mySocket = socket.socket()
-	mySocket.connect(('127.0.0.1',port))
+	mySocket.connect((args.address,port))
 	data = mySocket.recv(1024).decode()
 	print(data)
 
